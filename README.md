@@ -1,7 +1,7 @@
-# P.A.M
-Personal Application Management (P.A.M )
+# T.E.A.M
+Test Engineer Applications Management (T.E.A.M)
 
-P.A.M is a All-in-One platform that will help launching and maintaining applications P.A.M is capable of :
+T.E.A.M is a All-in-One platform that will help launching and maintaining applications T.E.A.M is capable of :
 
   + ONE CLICK start application
 
