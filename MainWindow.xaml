@@ -1,0 +1,211 @@
+﻿<Window x:Class="ExpressGangLoader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExpressGangLoader"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Express Gang Loader" Height="650" Width="1700" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
+
+
+    <Grid Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="559*"/>
+            <ColumnDefinition Width="1134*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="GridPrincipal" Margin="100,5,5,0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="0" IsIndeterminate="{Binding IsIndeterminateReturn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="5"/>
+            <DockPanel Grid.Row="1">
+                <DataGrid ItemsSource="{Binding UUTsList, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" ColumnWidth="*" IsSynchronizedWithCurrentItem="True" CanUserDeleteRows="False" HeadersVisibility="Column">
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style.Setters>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="black" />
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Progress" Width="82" Visibility="Visible">
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <ProgressBar Visibility="{Binding progressVisibility}" Value="{Binding FWProgressStatus, UpdateSourceTrigger=PropertyChanged}" Maximum="101" Width="30" Height="30" Style="{StaticResource MaterialDesignCircularProgressBar}" x:Name="DeterminateCircularProgress"/>
+                                        <materialDesign:PackIcon Visibility="{Binding PassVisibility, UpdateSourceTrigger=PropertyChanged}" Kind="Check" HorizontalAlignment="Center" Foreground="Green" Width="30" Height="30"/>
+                                        <materialDesign:PackIcon Visibility="{Binding FailVisibility, UpdateSourceTrigger=PropertyChanged}" Kind="NoEntry" HorizontalAlignment="Center" Foreground="Red" Width="30" Height="30"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="Status" FontSize="15" Binding="{Binding FWUpdateStatus , UpdateSourceTrigger=PropertyChanged}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="IP Address" FontSize="15" Binding="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="Device Name"  FontSize="15" Binding="{Binding Hostname, UpdateSourceTrigger=PropertyChanged}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="PartNumber" FontSize="15" Binding="{Binding PartNumber, UpdateSourceTrigger=PropertyChanged}" Width="130">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="MAC Address" FontSize="15" Binding="{Binding MacAddress, UpdateSourceTrigger=PropertyChanged}" Width="140">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="FW Version" FontSize="15" Binding="{Binding Version, UpdateSourceTrigger=PropertyChanged}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                        <DataGridTextColumn Header="FW File" FontSize="15" Binding="{Binding FW_File, UpdateSourceTrigger=PropertyChanged}" Width="*">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style
+                                    TargetType="{x:Type DataGridColumnHeader}"
+                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="FontWeight"  Value="Bold" />
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <WrapPanel Grid.Row="2">
+                <TextBlock HorizontalAlignment="Center" Text="InProgress :" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding InProgressReport, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="|       Successful:" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding SuccessReport, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="|      Failed :" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding FailedReport, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="|      Total :" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding TotalUUTReport, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+            </WrapPanel>
+            <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
+                <TextBlock HorizontalAlignment="Right"  Text="Version :" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+                <TextBlock HorizontalAlignment="Right"  Text="{Binding ExpressGangLoaderVersion, UpdateSourceTrigger=PropertyChanged}" FontSize="15" FontWeight="Bold" Margin="5,0,20,0"/>
+            </WrapPanel>
+        </Grid>
+        <Grid  x:Name="GridMenu" Width="95" HorizontalAlignment="left" Background="#4578B7">
+            <StackPanel Orientation="Vertical">
+                <Grid Height="75" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Grid.Row="0" Kind="User" HorizontalAlignment="Center" Foreground="White"  Width="30" Height="30"/>
+                    <TextBox materialDesign:HintAssist.Hint="name" Grid.Row="1" Height="38" Background="White" Typography.Capitals="AllSmallCaps" BorderBrush="Black" VerticalAlignment="Top" HorizontalContentAlignment="Center"  FontSize="20" Text="{Binding UserName_tbTEXT, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ToggleButton Grid.Row="0" IsEnabled="{Binding Linux_LegacyCheckEnableCommand, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding Linux_LegacyCheckCommand, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource MaterialDesignSwitchToggleButton}" Foreground="White" Background="LightGreen"  ToolTip="Default ToggleButton Style" />
+                    <Label Content="{Binding Linux_LegacyTypeCommand, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Height="38" Background="Transparent" Foreground="White" Typography.Capitals="AllSmallCaps" VerticalAlignment="Top" HorizontalContentAlignment="Center"  FontSize="20" />
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60" IsEnabled="{Binding ProgramDis_Enable}" >
+                    <Button BorderThickness="0" Height="60" VerticalContentAlignment="Bottom"  Foreground="White" Background="Transparent" Focusable="False" Content="Search" FontSize="15" Command="{Binding SearchExecute_Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <materialDesign:PackIcon Kind="Search" HorizontalAlignment="Center" Foreground="White"  Width="30" Height="30"/>
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60" >
+                    <Button BorderThickness="0" Height="60" VerticalContentAlignment="Bottom"  Foreground="White" Background="Transparent" Focusable="False" Content="Browse" FontSize="15" Command="{Binding BrowseFileExecute_Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <materialDesign:PackIcon Kind="FileCabinet" HorizontalAlignment="Center" Foreground="White"  Width="30" Height="30"/>
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60" >
+                    <Button BorderThickness="0" Height="60" VerticalContentAlignment="Bottom"  Foreground="White" Background="Transparent" Focusable="False" Content="Program" FontSize="15" Command="{Binding ProgramExecutee_Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <materialDesign:PackIcon Kind="ProgressDownload" HorizontalAlignment="Center" Foreground="White"  Width="30" Height="30"/>
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom">
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60">
+                    <Button Height="60" BorderThickness="0" Foreground="White" Background="Transparent" Focusable="False" Content="{materialDesign:PackIcon Kind=Settings}" Command="{Binding FixtureSettingExecute_Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <Button BorderThickness="0" Height="30" VerticalAlignment="Bottom" Foreground="White" Background="Transparent" IsHitTestVisible ="False" Focusable="False" Content="Fixtures"></Button>
+                </Grid>
+                <Separator Background="White" Margin="0,2,0,2"/>
+                <Grid Height="60">
+                    <Button Height="60" BorderThickness="0" Foreground="White" Background="Transparent" Focusable="False" Content="{materialDesign:PackIcon Kind=LayersClear}" Command="{Binding ClearArpExecute_Command,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
+                    <Button BorderThickness="0" Height="30" VerticalAlignment="Bottom" Foreground="White" Background="Transparent" IsHitTestVisible ="False" Focusable="False" Content="Clear Arp"></Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.ColumnSpan="2">
+            <materialDesign:DialogHost Identifier="FixtureSettingDialog"/>
+        </Grid>
+    </Grid>
+</Window>
